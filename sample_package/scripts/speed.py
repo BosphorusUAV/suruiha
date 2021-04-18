@@ -20,7 +20,7 @@ def set_speed(uav_id=1):
         speed.header.seq += 1
         
         if speed.header.seq < 10:
-            # iha'nın pervane hızları
+            # iha'nin pervane hizlari
             speed.angular_velocities = [3000, 3000, 3000, 3000]
         else:
             speed.angular_velocities = [1500, 1500, 1500, 1500]
