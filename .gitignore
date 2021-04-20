@@ -3,3 +3,5 @@
 *.exe
 *__pycache__/*
 *.swp
+*.in
+*.out
