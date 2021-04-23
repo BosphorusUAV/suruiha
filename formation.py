@@ -159,15 +159,65 @@ class Formation:
       def besgen(self, center, yaw, N, uav_distance):
             formation_points = []
 
-            #buraya yaz
+            Rate = uav_distance
+            gx = center.x
+            gy = center.y
+            gz = center.z
+
+            #noktalar
+            formation_points.append( Point( gx,                      gy+0.8506508083520*Rate, gz ) )
+            formation_points.append( Point( gx+0.8090169943749*Rate, gy+0.2628655560596*Rate, gz ) )
+            formation_points.append( Point( gx-0.8090169943749*Rate, gy+0.2628655560596*Rate, gz ) )
+            formation_points.append( Point( gx-0.5*Rate,             gy-0.6881909602356*Rate, gz ) )
+            formation_points.append( Point( gx+0.5*Rate,             gy-0.6881909602356*Rate, gz ) )
+
+            #merkez etrafinda aci kadar gore dondurme
+            for point in formation_points:
+                  point.x -= gx
+                  point.y -= gy
+                  tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
+                  tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
+                  point.x = tempx+gx
+                  point.y = tempy+gy
 
             return formation_points
       
       
       def yildiz(self, center, yaw, N, uav_distance):
             formation_points = []
+            
+            #katsayilar
+            Rate = uav_distance
+            smallStarRate = 0.6180339887499
+            bigStarRate = 1.6180339887499
 
-            #buraya yaz
+            #merkez noktasi
+            gx = center.x
+            gy = center.y
+            gz = center.z
+
+            #buyuk besgenin noktalari
+            formation_points.append( Point( gx,                                  gy+0.8506508083520*Rate*bigStarRate, gz ) )
+            formation_points.append( Point( gx-0.8090169943749*Rate*bigStarRate, gy+0.2628655560596*Rate*bigStarRate, gz ) )
+            formation_points.append( Point( gx+0.8090169943749*Rate*bigStarRate, gy+0.2628655560596*Rate*bigStarRate, gz ) )
+            formation_points.append( Point( gx-0.5*Rate*bigStarRate,             gy-0.6881909602356*Rate*bigStarRate, gz ) )
+            formation_points.append( Point( gx+0.5*Rate*bigStarRate,             gy-0.6881909602356*Rate*bigStarRate, gz ) )
+            
+            #kucuk besgenin noktalari
+            formation_points.append( Point( gx,                                    gy-0.8506508083520*Rate*smallStarRate, gz ) )
+            formation_points.append( Point( gx-0.8090169943749*Rate*smallStarRate, gy-0.2628655560596*Rate*smallStarRate, gz ) )
+            formation_points.append( Point( gx+0.8090169943749*Rate*smallStarRate, gy-0.2628655560596*Rate*smallStarRate, gz ) )
+            formation_points.append( Point( gx-0.5*Rate*smallStarRate,             gy+0.6881909602356*Rate*smallStarRate, gz ) )
+            formation_points.append( Point( gx+0.5*Rate*smallStarRate,             gy+0.6881909602356*Rate*smallStarRate, gz ) )
+
+            #merkez etrafinda aci kadar gore dondurme
+            for point in formation_points:
+                  point.x -= gx
+                  point.y -= gy
+                  tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
+                  tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
+                  point.x = tempx + gx
+                  point.y = tempy + gy
 
             return formation_points
       
