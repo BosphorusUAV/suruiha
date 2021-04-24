@@ -18,7 +18,7 @@ def distance(a:Point, b:Point):
       dx = a.x - b.x
       dy = a.y - b.y
       dz = a.z - b.z
-      return dx*dx + dy*dy + dz*dz
+      return np.sqrt(dx*dx + dy*dy + dz*dz)
 
 
 
@@ -51,11 +51,12 @@ class Formation:
             """
             uav_points: ihalarin baslangic noktasi\n
             formation_type: formasyon tipi\n
-            uav_distance: ihalar arasi mesafe
+            uav_distance: ihalar arasi mesafe\n
             center: formasyon merkezi (None ise agirlik merkezine gore hesaplanir)\n
             yaw: formasyon acisi (None ise optimum aci secilir)(radyan)\n
             """
             self.N = len(uav_points)
+
             if self.N == 0:
                   print("Warning: formasyon olustururken iha sayisi 0 olamaz", file=sys.stderr)
                   return 
@@ -69,17 +70,21 @@ class Formation:
 
             angles = self.__angles if yaw == None else [yaw]
             
-            for angle in angles:
-                  
-                  formation_points = self.__getFormationPoints(angle)
-                  
-                  dist, formation_points = self.__bitmaskdp(formation_points)
+            try:
+                  for angle in angles:
+                        
+                        formation_points = self.__getFormationPoints(angle)
+                        
+                        dist, formation_points = self.__bitmaskdp(formation_points)
 
-                  if self.__distance == None or self.__distance > dist:
-                        self.__distance = dist
-                        self.yaw = angle
-                        self.formation_points = formation_points
-
+                        if self.__distance == None or self.__distance > dist:
+                              self.__distance = dist
+                              self.yaw = angle
+                              self.formation_points = formation_points
+            
+            except:
+                  print(f"{self.N} iha ile {formation_type} olusturma desteklenmiyor", file=sys.stderr)
+                  
       
       def __getcenter(self, center):
             x = np.mean([p.x for p in self.uav_points]) if center.x == None else center.x
@@ -112,7 +117,7 @@ class Formation:
       
       
       def rastgele(self, center, yaw, N, uav_distance):
-            format_points = []
+            formation_points = []
             
             for _ in range(N):
                   
@@ -122,24 +127,25 @@ class Formation:
                         eligible = True
                   
                         point = Point(
-                              np.random.randn()*uav_distance*2,
-                              np.random.randn()*uav_distance*2,
+                              (np.random.rand()-0.5)*uav_distance*N/2,
+                              (np.random.rand()-0.5)*uav_distance*N/2,
                               0
                         )
                   
-                        for j in format_points:
+                        for j in formation_points:
                               if distance(point, j) < uav_distance:
                                     eligible = False
                   
-                  format_points.append(point)
+                  formation_points.append(point)
       
-            for point in format_points:
+            for point in formation_points:
                   point.x += center.x
                   point.y += center.y
                   point.z = center.z
 
-            return format_points
+            return formation_points
                   
+
       def ucgen(self, center, yaw, N, uav_distance):
             formation_points = []
 
@@ -217,6 +223,9 @@ class Formation:
       def besgen(self, center, yaw, N, uav_distance):
             formation_points = []
 
+            assert N <= 5
+            # 10 iha ile besgen olusturma eklenebilir (her kenarin ortasina bir iha)
+
             Rate = uav_distance
             gx = center.x
             gy = center.y
@@ -243,6 +252,8 @@ class Formation:
       
       def yildiz(self, center, yaw, N, uav_distance):
             formation_points = []
+
+            assert N <= 10
             
             #katsayilar
             Rate = uav_distance
@@ -311,7 +322,7 @@ if __name__ == '__main__':
       ]
 
       formasyon = Formation()
-      formasyon.createFormation(ihalar, 'ucgen', uav_distance=1.0, center=Point(None, None, 1)) 
+      formasyon.createFormation(ihalar[:5], 'besgen', uav_distance=0.5, center=Point(None, None, 1)) 
       #test etmek icin formasyon tipini degistir
 
       from matplotlib import pyplot as plt
