@@ -224,9 +224,9 @@ class Formation:
             formation_points = []
 
             assert N <= 5
-            # 10 iha ile besgen olusturma eklenebilir (her kenarin ortasina bir iha)
 
             Rate = uav_distance
+            smallRate=1.6180339887499/2
             gx = center.x
             gy = center.y
             gz = center.z
@@ -238,6 +238,13 @@ class Formation:
             formation_points.append( Point( gx-0.5*Rate,             gy-0.6881909602356*Rate, gz ) )
             formation_points.append( Point( gx+0.5*Rate,             gy-0.6881909602356*Rate, gz ) )
 
+            #orta noktalar
+            formation_points.append( Point( gx,                                gy-0.8506508083520*Rate*smallRate, gz ) )
+            formation_points.append( Point( gx-0.8090169943749*Rate*smallRate, gy-0.2628655560596*Rate*smallRate, gz ) )
+            formation_points.append( Point( gx+0.8090169943749*Rate*smallRate, gy-0.2628655560596*Rate*smallRate, gz ) )
+            formation_points.append( Point( gx-0.5*Rate*smallRate,             gy+0.6881909602356*Rate*smallRate, gz ) )
+            formation_points.append( Point( gx+0.5*Rate*smallRate,             gy+0.6881909602356*Rate*smallRate, gz ) )
+
             #merkez etrafinda aci kadar gore dondurme
             for point in formation_points:
                   point.x -= gx
@@ -247,7 +254,7 @@ class Formation:
                   point.x = tempx+gx
                   point.y = tempy+gy
 
-            return formation_points
+            return formation_points[:N]
       
       
       def yildiz(self, center, yaw, N, uav_distance):
