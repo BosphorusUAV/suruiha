@@ -215,10 +215,31 @@ class Formation:
       def kare(self, center, yaw, N, uav_distance):
             formation_points = []
 
-            #buraya yaz
+            # assert N == 4
+            gx = center.x
+            gy = center.y
+            gz = center.z
 
-            return formation_points
-      
+            # calculate main 4 points
+            formation_points.append(Point(gx+uav_distance/2, gy+uav_distance/2, gz))
+            formation_points.append(Point(gx+uav_distance/2, gy-uav_distance/2, gz))
+            formation_points.append(Point(gx-uav_distance/2, gy-uav_distance/2, gz))
+            formation_points.append(Point(gx-uav_distance/2, gy+uav_distance/2, gz))
+
+            # add (N - 4) / 4 points to each side
+            pointsNeeded = int(np.ceil((N - 4) / 4))
+            distanceNew = uav_distance / (pointsNeeded + 1)
+            for i in range(1, pointsNeeded + 1):
+                  formation_points.append(
+                        Point(formation_points[0].x, formation_points[0].y - distanceNew * i, formation_points[0].z))
+                  formation_points.append(
+                        Point(formation_points[1].x - distanceNew * i, formation_points[1].y, formation_points[1].z))
+                  formation_points.append(
+                        Point(formation_points[2].x, formation_points[2].y + distanceNew * i, formation_points[2].z))
+                  formation_points.append(
+                        Point(formation_points[3].x + distanceNew * i, formation_points[3].y, formation_points[3].z))
+
+            return formation_points[0:N]
       
       def besgen(self, center, yaw, N, uav_distance):
             formation_points = []
@@ -371,7 +392,7 @@ if __name__ == '__main__':
       ]
 
       formasyon = Formation()
-      formasyon.createFormation(ihalar[:5], 'besgen', uav_distance=0.5, center=Point(None, None, 1)) 
+      formasyon.createFormation(ihalar[:10], 'kare', uav_distance=1, center=Point(None, None, 1)) 
       #test etmek icin formasyon tipini degistir
 
       from matplotlib import pyplot as plt
