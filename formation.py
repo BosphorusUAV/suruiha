@@ -143,7 +143,65 @@ class Formation:
       def ucgen(self, center, yaw, N, uav_distance):
             formation_points = []
 
-            #buraya yaz
+            #ucgenin bir kenar uzunluğu
+            edge_length = ((N+2)/3) * uav_distance  
+            
+            #agırlık merkezinin koselere uzaklığı
+            g = edge_length / (3 ** (0.5))
+
+            sin60 = (np.sin((np.pi)/3))
+            cos60 = (np.cos((np.pi)/3))
+
+            gx = center.x
+            gy = center.y
+            gz = center.z
+
+            #koseler
+            x_vertex = Point( gx + g           , gy               , gz )
+            y_vertex = Point( gx - (g * cos60) , gy + (g * sin60) , gz )
+            z_vertex = Point( gx - (g * cos60) , gy - (g * sin60) , gz ) 
+
+            #kenarlar uzerindeki noktalar
+            edge_points = []
+            
+            for i in range((int)((N-1)/3)):
+
+                  #xy kenarı
+                  edge_points.append(Point( gx + g - (i+1) * (g * (1+cos60)/((N+2)/3)),
+                                            gy + (i+1) * (g * (sin60)/((N+2)/3))      ,                                
+                                            gz                                        ))
+                  #xz kenarı                          
+                  edge_points.append(Point( gx + g - (i+1) * (g * (1+cos60)/((N+2)/3)),                           
+                                            -(gy + (i+1) * (g * (sin60)/((N+2)/3)))   ,        
+                                            gz                                        ))
+                  #yz kenarı                          
+                  edge_points.append(Point( gx - (g * cos60)                          ,
+                                            gy + (g * sin60) - (i+1) * (uav_distance) ,
+                                            gz                                        ))
+
+            if N == 1:
+
+                  #koseler
+                  formation_points.append(x_vertex)
+
+            elif N == 2:
+
+                  #koseler
+                  formation_points.append(x_vertex)
+                  formation_points.append(y_vertex)
+
+            else:
+
+                  #koseler
+                  formation_points.append(x_vertex)
+                  formation_points.append(y_vertex)
+                  formation_points.append(z_vertex)
+                  
+                  #kenarlar uzerindeki noktalar
+                  for i in range(N-3):
+
+                        formation_points.append(edge_points[i])      
+
 
             return formation_points
       
@@ -253,9 +311,8 @@ if __name__ == '__main__':
       ]
 
       formasyon = Formation()
-      formasyon.createFormation(ihalar, 'rastgele', uav_distance=0.15, center=Point(None, None, 1)) 
+      formasyon.createFormation(ihalar, 'ucgen', uav_distance=1.0, center=Point(None, None, 1)) 
       #test etmek icin formasyon tipini degistir
-      
 
       from matplotlib import pyplot as plt
 
