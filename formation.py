@@ -294,7 +294,27 @@ class Formation:
       def V(self, center, yaw, N, uav_distance):
             formation_points = []
 
-            #buraya yaz
+            Rate = uav_distance
+            gx = center.x
+            gy = center.y
+            gz = center.z
+            sin60 = (1 / 2) * (3**(1/2))
+
+            #noktalar
+            formation_points.append( Point( gx - Rate / 2, gy ,               gz ) )
+            formation_points.append( Point( gx + Rate / 2, gy ,               gz ) )
+            formation_points.append( Point( gx - Rate,     gy + Rate * sin60, gz ) )
+            formation_points.append( Point( gx + Rate,     gy + Rate * sin60, gz ) )
+            formation_points.append( Point( gx ,           gy - Rate * sin60, gz ) )
+
+            #merkez etrafinda aci kadar gore dondurme
+            for point in formation_points:
+                  point.x -= gx
+                  point.y -= gy
+                  tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
+                  tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
+                  point.x = tempx+gx
+                  point.y = tempy+gy
 
             return formation_points
       
