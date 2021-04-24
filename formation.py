@@ -322,7 +322,29 @@ class Formation:
       def hilal(self, center, yaw, N, uav_distance):
             formation_points = []
 
-            #buraya yaz
+            assert N <= 6
+
+            Rate = uav_distance
+            gx = center.x
+            gy = center.y
+            gz = center.z
+
+            #noktalar
+            formation_points.append(Point(gx-Rate*0.86602540378, gy+Rate*0.5, gz))
+            formation_points.append(Point(gx-Rate*0.95105651629, gy-Rate*0.30901699437, gz))
+            formation_points.append(Point(gx-Rate*0.40673664307, gy-Rate*0.91354545764, gz))
+            formation_points.append(Point(gx+Rate*0.40673664307, gy-Rate*0.91354545764, gz))
+            formation_points.append(Point(gx+Rate*0.95105651629, gy-Rate*0.30901699437, gz))
+            formation_points.append(Point(gx+Rate*0.86602540378, gy+Rate*0.5, gz))
+
+            #merkez etrafinda aci kadar gore dondurme
+            for point in formation_points:
+                  point.x -= gx
+                  point.y -= gy
+                  tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
+                  tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
+                  point.x = tempx+gx
+                  point.y = tempy+gy
 
             return formation_points
 
