@@ -331,10 +331,10 @@ class Formation:
 
             #noktalar
             formation_points.append(Point(gx-Rate*0.86602540378, gy+Rate*0.5, gz))
-            formation_points.append(Point(gx-Rate*0.95105651629, gy-Rate*0.30901699437, gz))
-            formation_points.append(Point(gx-Rate*0.40673664307, gy-Rate*0.91354545764, gz))
-            formation_points.append(Point(gx+Rate*0.40673664307, gy-Rate*0.91354545764, gz))
-            formation_points.append(Point(gx+Rate*0.95105651629, gy-Rate*0.30901699437, gz))
+            formation_points.append(Point(gx-Rate*0.95105651629, gy-Rate*0.3090169943, gz))
+            formation_points.append(Point(gx-Rate*0.40673664307, gy-Rate*0.9135454576, gz))
+            formation_points.append(Point(gx+Rate*0.40673664307, gy-Rate*0.9135454576, gz))
+            formation_points.append(Point(gx+Rate*0.95105651629, gy-Rate*0.3090169943, gz))
             formation_points.append(Point(gx+Rate*0.86602540378, gy+Rate*0.5, gz))
 
             #merkez etrafinda aci kadar gore dondurme
