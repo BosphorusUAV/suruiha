@@ -1,7 +1,7 @@
 *.pyc
 *.vscode
 *.exe
-*__pycache__/*
+*__pycache__*
 *.swp
 *.in
 *.out
