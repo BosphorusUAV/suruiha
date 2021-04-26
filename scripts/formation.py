@@ -1,6 +1,6 @@
 import sys, os
 import numpy as np
-from point import Point, distance
+from point import Point, distance, rotate
 
 os.system('g++ -O3 -o bitmaskdp.exe bitmaskdp.cpp')
 
@@ -52,6 +52,7 @@ class Formation:
         angles = self.__angles if yaw == None else [yaw]
         
         try:
+            self.__distance = None
             for angle in angles:
                 
                 formation_points = self.__getFormationPoints(angle)
@@ -68,31 +69,33 @@ class Formation:
 
 
     
-    def rotate(self, angle, relative=False):
-        """
-        relative=True ise yeni aci self.yaw+angle olur\n
-        relatibe=False ise yeni aci angle olur
-        """
-        # self.yaw: suanki aci
-        # self.formation_points: suanki formasyon noktalari
+    def rotate(self, angle):
 
-        # buraya yaz
+        rotate(self.formation_points, self.center, angle)
 
-        self.yaw ###degistir###
-        self.formation_points ###degistir###
+        self.yaw += (self.yaw + angle) % (2*np.pi)
+
+
     
     def shift(self, vector:Point, relative=True):
         """
         merkezi ve tum formasyon noktalarini vector kadar kaydirir\n
         eger relative=False ise merkez vector noktasinda olacak sekilde kaydirilir
         """
-        # self.center: suanki merkez
-        # self.formation_points: suanki formasyon noktalari
         
-        # buraya yaz
+        if not relative:
+            vector.x -= self.center.x
+            vector.y -= self.center.y
+            vector.z -= self.center.z
+        
+        for point in self.formation_points:
+            point.x += vector.x
+            point.y += vector.y
+            point.z += vector.z
 
-        self.center ###degistir###
-        self.formation_points ###degistir###
+        self.center.x += vector.x
+        self.center.y += vector.y
+        self.center.z += vector.z
 
 
     def __getcenter(self, center):
@@ -218,6 +221,9 @@ class Formation:
                 formation_points.append(edge_points[i])      
 
 
+        #merkez etrafinda aci kadar gore dondurme
+        rotate(formation_points, center, yaw)
+
         return formation_points
     
     
@@ -247,6 +253,9 @@ class Formation:
             formation_points.append(
                 Point(formation_points[3].x + distanceNew * i, formation_points[3].y, formation_points[3].z))
 
+        #merkez etrafinda aci kadar gore dondurme
+        rotate(formation_points, center, yaw)
+
         return formation_points
     
     def besgen(self, center, yaw, N, uav_distance):
@@ -275,13 +284,7 @@ class Formation:
         formation_points.append( Point( gx+0.5*Rate*smallRate,             gy+0.6881909602356*Rate*smallRate, gz ) )
 
         #merkez etrafinda aci kadar gore dondurme
-        for point in formation_points:
-            point.x -= gx
-            point.y -= gy
-            tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
-            tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
-            point.x = tempx+gx
-            point.y = tempy+gy
+        rotate(formation_points, center, yaw)
 
         return formation_points
     
@@ -316,13 +319,7 @@ class Formation:
         formation_points.append( Point( gx+0.5*Rate*smallStarRate,             gy+0.6881909602356*Rate*smallStarRate, gz ) )
 
         #merkez etrafinda aci kadar gore dondurme
-        for point in formation_points:
-            point.x -= gx
-            point.y -= gy
-            tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
-            tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
-            point.x = tempx + gx
-            point.y = tempy + gy
+        rotate(formation_points, center, yaw)
 
         return formation_points
     
@@ -346,13 +343,7 @@ class Formation:
         formation_points.append( Point( gx ,           gy - Rate * sin60, gz ) )
 
         #merkez etrafinda aci kadar gore dondurme
-        for point in formation_points:
-            point.x -= gx
-            point.y -= gy
-            tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
-            tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
-            point.x = tempx+gx
-            point.y = tempy+gy
+        rotate(formation_points, center, yaw)
 
         return formation_points
     
@@ -376,13 +367,7 @@ class Formation:
         formation_points.append(Point(gx+Rate*0.86602540378, gy+Rate*0.5,          gz))
 
         #merkez etrafinda aci kadar gore dondurme
-        for point in formation_points:
-            point.x -= gx
-            point.y -= gy
-            tempx = point.x * np.cos(yaw) - point.y * np.sin(yaw)
-            tempy = point.x * np.sin(yaw) + point.y * np.cos(yaw)
-            point.x = tempx+gx
-            point.y = tempy+gy
+        rotate(formation_points, center, yaw)
 
         return formation_points
 
