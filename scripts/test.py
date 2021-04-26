@@ -1,27 +1,25 @@
-from uav_controller import UAVController
-from formation import Formation
 from point import Point
+from uav import UAV, uavs, timeHelper
+from formation import Formation
+from swarm import Swarm, swarms
 
-formasyon = Formation()
-controller = UAVController()
-formasyon.createFormation(
-    [Point(vector=uav.position()) for uav in controller.uavs], 
+
+swarm0 = Swarm(uavs)
+
+swarms.append(swarm0)
+
+timeHelper.sleep(10)
+
+swarm0.changeFormation( 
     formation_type='yildiz', 
     uav_distance=1, 
-    center=Point(None, None, 1)
+    center=Point(None, None, 2)
 )
 
-for i in range(controller.s):
-    controller.takeoff(i, z=0.1, duration=0.1, sleep=0)
+swarm0.command(duration=10, inorder=0, sleep=20)
 
-controller.sleep(5)
 
-for i in range(controller.s):
-    controller.goTo(i, formasyon.formation_points[i], duration=5, sleep=0)
+for uav in uavs:
+    uav.land(z=0, duration=2, sleep=0)
 
-controller.sleep(20)
-
-for i in range(controller.s):
-    controller.land(i, z=0, duration=2, sleep=0)
-
-controller.sleep(5)
+timeHelper.sleep(5)
