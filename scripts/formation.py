@@ -351,9 +351,7 @@ class Formation:
     
     def hilal(self, center, yaw, N, uav_distance):
         formation_points = []
-
-        assert N <= 6
-
+        
         Rate = uav_distance
         gx = center.x
         gy = center.y
@@ -366,6 +364,11 @@ class Formation:
         formation_points.append(Point(gx+Rate*0.40673664307, gy-Rate*0.9135454576, gz))
         formation_points.append(Point(gx+Rate*0.95105651629, gy-Rate*0.3090169943, gz))
         formation_points.append(Point(gx+Rate*0.86602540378, gy+Rate*0.5,          gz))
+        formation_points.append(Point(gx-Rate*0.99452189536, gy+Rate*0.10452846326, gz))
+        formation_points.append(Point(gx-Rate*0.74314482547, gy-Rate*0.66913060635, gz))
+        formation_points.append(Point(gx, gy-Rate, gz))
+        formation_points.append(Point(gx+Rate*0.74314482547, gy-Rate*0.66913060635, gz))
+        formation_points.append(Point(gx+Rate*0.99452189536, gy+Rate*0.10452846326, gz))
 
         #merkez etrafinda aci kadar gore dondurme
         rotate(formation_points, center, yaw)
