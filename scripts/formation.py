@@ -357,12 +357,14 @@ class Formation:
     
     def hilal(self, center, yaw, N, uav_distance):
         formation_points = []
-        
         Rate = uav_distance
         gx = center.x
         gy = center.y
         gz = center.z
-
+        
+        if N>6:
+            Rate = Rate * 1.5
+        
         #noktalar
         formation_points.append(Point(gx-Rate*0.86602540378, gy+Rate*0.5,          gz))
         formation_points.append(Point(gx-Rate*0.95105651629, gy-Rate*0.3090169943, gz))
