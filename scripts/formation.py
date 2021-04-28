@@ -330,7 +330,7 @@ class Formation:
 
         assert N <= 9
 
-        Rate = uav_distance
+        Rate = uav_distance * 2
         gx = center.x
         gy = center.y
         gz = center.z
@@ -340,15 +340,15 @@ class Formation:
 
         #noktalar
         formation_points.append( Point( gx ,                       gy - Rate * cosal,     gz ) )
-        formation_points.append( Point( gx - 2 * Rate * sinal,     gy + Rate * cosal,     gz ) )
-        formation_points.append( Point( gx + 2 * Rate * sinal,     gy + Rate * cosal,     gz ) )
+        formation_points.append( Point( gx - Rate * sinal / 2,     gy - Rate * cosal / 2, gz ) )
+        formation_points.append( Point( gx + Rate * sinal / 2,     gy - Rate * cosal / 2, gz ) )
         formation_points.append( Point( gx - Rate * sinal,         gy ,                   gz ) )
         formation_points.append( Point( gx + Rate * sinal,         gy ,                   gz ) )
         formation_points.append( Point( gx - 3 * Rate * sinal / 2, gy + Rate * cosal / 2, gz ) )
         formation_points.append( Point( gx + 3 * Rate * sinal / 2, gy + Rate * cosal / 2, gz ) )
-        formation_points.append( Point( gx - Rate * sinal / 4,     gy - Rate * cosal / 2, gz ) )
-        formation_points.append( Point( gx + Rate * sinal / 4,     gy - Rate * cosal / 2, gz ) )
-
+        formation_points.append( Point( gx - 2 * Rate * sinal,     gy + Rate * cosal,     gz ) )
+        formation_points.append( Point( gx + 2 * Rate * sinal,     gy + Rate * cosal,     gz ) )
+                
         #merkez etrafinda aci kadar gore dondurme
         rotate(formation_points, center, yaw)
 
