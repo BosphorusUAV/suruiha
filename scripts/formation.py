@@ -325,28 +325,34 @@ class Formation:
         return formation_points
     
     
-    def V(self, center, yaw, N, uav_distance):
+    def V(self, center, yaw, N, uav_distance, alfa = (np.pi)/3):
         formation_points = []
 
-        assert N <= 5
+        assert N <= 9
 
         Rate = uav_distance
         gx = center.x
         gy = center.y
         gz = center.z
-        sin60 = (1 / 2) * (3**(1/2))
+        
+        sinal = np.sin(alfa / 2)
+        cosal = np.cos(alfa / 2)
 
         #noktalar
-        formation_points.append( Point( gx - Rate / 2, gy ,               gz ) )
-        formation_points.append( Point( gx + Rate / 2, gy ,               gz ) )
-        formation_points.append( Point( gx - Rate,     gy + Rate * sin60, gz ) )
-        formation_points.append( Point( gx + Rate,     gy + Rate * sin60, gz ) )
-        formation_points.append( Point( gx ,           gy - Rate * sin60, gz ) )
+        formation_points.append( Point( gx ,                       gy - Rate * cosal,     gz ) )
+        formation_points.append( Point( gx - 2 * Rate * sinal,     gy + Rate * cosal,     gz ) )
+        formation_points.append( Point( gx + 2 * Rate * sinal,     gy + Rate * cosal,     gz ) )
+        formation_points.append( Point( gx - Rate * sinal,         gy ,                   gz ) )
+        formation_points.append( Point( gx + Rate * sinal,         gy ,                   gz ) )
+        formation_points.append( Point( gx - 3 * Rate * sinal / 2, gy + Rate * cosal / 2, gz ) )
+        formation_points.append( Point( gx + 3 * Rate * sinal / 2, gy + Rate * cosal / 2, gz ) )
+        formation_points.append( Point( gx - Rate * sinal / 4,     gy - Rate * cosal / 2, gz ) )
+        formation_points.append( Point( gx + Rate * sinal / 4,     gy - Rate * cosal / 2, gz ) )
 
         #merkez etrafinda aci kadar gore dondurme
         rotate(formation_points, center, yaw)
 
-        return formation_points
+        return formation_points[:N]
     
     
     def hilal(self, center, yaw, N, uav_distance):
