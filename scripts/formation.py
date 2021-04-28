@@ -230,30 +230,31 @@ class Formation:
     def kare(self, center, yaw, N, uav_distance):
         formation_points = []
 
+        # add (N - 4) / 4 points to each side
+        pointsNeeded = int(np.ceil((N - 4) / 4))
+        distanceNew = uav_distance * (pointsNeeded + 1)
+
         gx = center.x
         gy = center.y
         gz = center.z
 
         # calculate main 4 points
-        formation_points.append(Point(gx+uav_distance/2, gy+uav_distance/2, gz))
-        formation_points.append(Point(gx+uav_distance/2, gy-uav_distance/2, gz))
-        formation_points.append(Point(gx-uav_distance/2, gy-uav_distance/2, gz))
-        formation_points.append(Point(gx-uav_distance/2, gy+uav_distance/2, gz))
+        formation_points.append(Point(gx+distanceNew/2, gy+distanceNew/2, gz))
+        formation_points.append(Point(gx+distanceNew/2, gy-distanceNew/2, gz))
+        formation_points.append(Point(gx-distanceNew/2, gy-distanceNew/2, gz))
+        formation_points.append(Point(gx-distanceNew/2, gy+distanceNew/2, gz))
 
-        # add (N - 4) / 4 points to each side
-        pointsNeeded = int(np.ceil((N - 4) / 4))
-        distanceNew = uav_distance / (pointsNeeded + 1)
         for i in range(1, pointsNeeded + 1):
             formation_points.append(
-                Point(formation_points[0].x, formation_points[0].y - distanceNew * i, formation_points[0].z))
+                Point(formation_points[0].x, formation_points[0].y - uav_distance * i, formation_points[0].z))
             formation_points.append(
-                Point(formation_points[1].x - distanceNew * i, formation_points[1].y, formation_points[1].z))
+                Point(formation_points[1].x - uav_distance * i, formation_points[1].y, formation_points[1].z))
             formation_points.append(
-                Point(formation_points[2].x, formation_points[2].y + distanceNew * i, formation_points[2].z))
+                Point(formation_points[2].x, formation_points[2].y + uav_distance * i, formation_points[2].z))
             formation_points.append(
-                Point(formation_points[3].x + distanceNew * i, formation_points[3].y, formation_points[3].z))
+                Point(formation_points[3].x + uav_distance * i, formation_points[3].y, formation_points[3].z))
 
-        #merkez etrafinda aci kadar gore dondurme
+        # merkez etrafinda aci kadar gore dondurme
         rotate(formation_points, center, yaw)
 
         return formation_points
