@@ -340,9 +340,9 @@ class Formation:
         formation_points.append( Point( gx , gy - Rate * cosal, gz ) )
         for i in range(1, int(N / 2) + 1):
             formation_points.append(
-                Point(formation_points[0].x - i * Rate * sinal / 2, formation_points[0].y + (i - 2) * Rate * cosal / 2, formation_points[0].z))
+                Point(formation_points[0].x - i * Rate * sinal / 2, formation_points[0].y + i * Rate * cosal / 2, formation_points[0].z))
             formation_points.append(
-                Point(formation_points[0].x + i * Rate * sinal / 2, formation_points[0].y + (i - 2) * Rate * cosal / 2, formation_points[0].z))
+                Point(formation_points[0].x + i * Rate * sinal / 2, formation_points[0].y + i * Rate * cosal / 2, formation_points[0].z))
 
                 
         #merkez etrafinda aci kadar gore dondurme
