@@ -362,6 +362,9 @@ class Formation:
         
         if N>6:
             Rate = Rate * 1.5
+            
+        if N>11:
+            Rate = Rate * 1.5
         
         #noktalar
         formation_points.append(Point(gx-Rate*0.86602540378, gy+Rate*0.5,          gz))
@@ -375,11 +378,21 @@ class Formation:
         formation_points.append(Point(gx, gy-Rate, gz))
         formation_points.append(Point(gx+Rate*0.74314482547, gy-Rate*0.66913060635, gz))
         formation_points.append(Point(gx+Rate*0.99452189536, gy+Rate*0.10452846326, gz))
+        formation_points.append(Point(gx-Rate*0.95105651629, gy+Rate*0.30901699437, gz))
+        formation_points.append(Point(gx-Rate*0.99452189536, gy-Rate*0.10452846326, gz))
+        formation_points.append(Point(gx-Rate*0.86602540378, gy-Rate*0.5, gz))
+        formation_points.append(Point(gx-Rate*0.58778525229, gy-Rate*0.80901699437, gz))
+        formation_points.append(Point(gx-Rate*0.20791169081, gy-Rate*0.97814760073, gz))
+        formation_points.append(Point(gx+Rate*0.20791169081, gy-Rate*0.97814760073, gz))
+        formation_points.append(Point(gx+Rate*0.58778525229, gy-Rate*0.80901699437, gz))
+        formation_points.append(Point(gx+Rate*0.86602540378, gy-Rate*0.5, gz))
+        formation_points.append(Point(gx+Rate*0.99452189536, gy-Rate*0.10452846326, gz))
+        formation_points.append(Point(gx+Rate*0.95105651629, gy+Rate*0.30901699437, gz))
 
         #merkez etrafinda aci kadar gore dondurme
         rotate(formation_points, center, yaw)
 
-        return formation_points
+        return formation_points[:N]
 
 
 if __name__ == '__main__':
