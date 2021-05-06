@@ -184,19 +184,21 @@ class Formation:
         
         for i in range((int)((N-1)/3)):
 
+            a = (int) ((N+2)/3)
+
             #xy kenarı
-            edge_points.append(Point( gx + g - (i+1) * (g * (1+cos60)/((N+2)/3)),
-                              gy + (i+1) * (g * (sin60)/((N+2)/3))      ,                                
+            edge_points.append(Point( gx + g - (i+1) * (g * (1+cos60)/a),
+                              gy + (i+1) * (g * (sin60)/a)      ,                                
                               gz                                        ))
             #xz kenarı                          
-            edge_points.append(Point( gx + g - (i+1) * (g * (1+cos60)/((N+2)/3)),                           
-                              -(gy + (i+1) * (g * (sin60)/((N+2)/3)))   ,        
+            edge_points.append(Point( gx - (g * cos60) + (i+1) * (g * (1+cos60)/a),                           
+                              gy - (g * sin60) + (i+1) * (g * sin60/a),        
                               gz                                        ))
             #yz kenarı                          
             edge_points.append(Point( gx - (g * cos60)                          ,
-                              gy + (g * sin60) - (i+1) * (uav_distance) ,
+                              gy + (g * sin60) - (i+1) * (2 * g * sin60 / a) ,
                               gz                                        ))
-
+        
         if N == 1:
 
             #koseler
@@ -391,11 +393,13 @@ if __name__ == '__main__':
         Point(0, -1, 0),
         Point(0.5, -0.5, 0),
         Point(-0.5, 0.5, 0),
-        Point(0.5, 0.5, 0)
+        Point(0.5, 0.5, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0)
     ]
 
     formasyon = Formation()
-    formasyon.createFormation(ihalar[:10], 'kare', uav_distance=1, center=Point(None, None, 1)) 
+    formasyon.createFormation(ihalar[:12], 'ucgen', uav_distance=1.5, center=Point(None, None, 1)) 
     #test etmek icin formasyon tipini degistir
 
     from matplotlib import pyplot as plt
