@@ -27,12 +27,12 @@ swarm0.changeFormation(
 )
 swarm0.command(duration=2, inorder=0, sleep=10)
 
-swarm0.add(uavs[4])
+swarm0.add([uavs[4]])
 swarm0.changeFormation('besgen')
 swarm0.command(duration=4, inorder=0, sleep=10)
 
 
-swarm0.add(uavs[5])
+swarm0.add([uavs[5]])
 swarm0.changeFormation('altigen')
 swarm0.command(duration=4, inorder=0, sleep=10)
 
