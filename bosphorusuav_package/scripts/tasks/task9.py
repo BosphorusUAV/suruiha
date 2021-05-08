@@ -24,7 +24,7 @@ swarm0.command(duration=5, inorder=0, sleep=10)
 
 for ang in rotangles :
     x = ang / (15/180)
-    for i in range(x):
+    for i in range((int)x):
         swarm0.rotation(15/180)
         swarm0.command(duration=5, inorder=0, sleep=0.05)
     timeHelper.sleep(wait)
