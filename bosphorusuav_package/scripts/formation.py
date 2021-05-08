@@ -28,7 +28,7 @@ class Formation:
             'rastgele': self.rastgele
         }
 
-    def createFormation(self, uav_points, formation_type='rastgele', uav_distance=0.25, center=Point(None, None, None), yaw=None):
+    def createFormation(self, uav_points, formation_type='rastgele', uav_distance=1, center=Point(None, None, None), yaw=None):
         """
         uav_points: ihalarin baslangic noktasi\n
         formation_type: formasyon tipi\n

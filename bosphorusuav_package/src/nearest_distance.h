@@ -1,16 +1,10 @@
 #include<bits/stdc++.h>
+#include"geometry.h"
 using namespace std;
 
-struct Point{
-	long double x, y, z;
-	Point(double _x=0, double _y=0, double _z=0): x(_x), y(_y), z(_z){}
-	void print(){
-		cout << x << " " << y << " " << z << " ";
-	}
-      void err(){
-		cerr << x << " " << y << " " << z << "\n";
-	}
-};
+#ifndef NEAREST_DISTANCE
+#define NEAREST_DISTANCE
+
 Point normalize(Point a){
     long double length = sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
     return Point(a.x / length, a.y / length, a.z / length);
@@ -87,3 +81,5 @@ long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
 
     return min(dist1, dist2);
 }
+
+#endif
