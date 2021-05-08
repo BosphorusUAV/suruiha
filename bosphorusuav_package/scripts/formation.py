@@ -263,36 +263,43 @@ class Formation:
     
     def besgen(self, center, yaw, N, uav_distance):
         formation_points = []
-
-        assert N <= 10
+        
+        assert N<=20
 
         Rate = uav_distance
-        smallRate=1.6180339887499/2
         gx = center.x
         gy = center.y
         gz = center.z
-        
-        if N>5:
-            Rate*=2
 
-        #noktalar
-        formation_points.append( Point( gx,                      gy+0.8506508083520*Rate, gz ) )
-        formation_points.append( Point( gx+0.8090169943749*Rate, gy+0.2628655560596*Rate, gz ) )
-        formation_points.append( Point( gx-0.8090169943749*Rate, gy+0.2628655560596*Rate, gz ) )
-        formation_points.append( Point( gx-0.5*Rate,             gy-0.6881909602356*Rate, gz ) )
-        formation_points.append( Point( gx+0.5*Rate,             gy-0.6881909602356*Rate, gz ) )
+        Rate*=(N-1)//5+1
+
+        #kose noktalar
+        A= Point( gx,                      gy+0.8506508083520*Rate, gz )
+        B= Point( gx-0.8090169943749*Rate, gy+0.2628655560596*Rate, gz )
+        C= Point( gx+0.8090169943749*Rate, gy+0.2628655560596*Rate, gz )
+        D= Point( gx-0.5*Rate,             gy-0.6881909602356*Rate, gz )
+        E= Point( gx+0.5*Rate,             gy-0.6881909602356*Rate, gz )
+
+        formation_points.append( A )
+        formation_points.append( B )
+        formation_points.append( C )
+        formation_points.append( D )
+        formation_points.append( E )
 
         #orta noktalar
-        formation_points.append( Point( gx,                                gy-0.8506508083520*Rate*smallRate, gz ) )
-        formation_points.append( Point( gx-0.8090169943749*Rate*smallRate, gy-0.2628655560596*Rate*smallRate, gz ) )
-        formation_points.append( Point( gx+0.8090169943749*Rate*smallRate, gy-0.2628655560596*Rate*smallRate, gz ) )
-        formation_points.append( Point( gx-0.5*Rate*smallRate,             gy+0.6881909602356*Rate*smallRate, gz ) )
-        formation_points.append( Point( gx+0.5*Rate*smallRate,             gy+0.6881909602356*Rate*smallRate, gz ) )
+        for i in range(1,(N-1)//5+1):
+            formation_points.append( Point( A.x+i*(B.x-A.x)/((N-1)//5+1) , A.y-i*(A.y-B.y)/((N-1)//5+1) , gz ) )
+            formation_points.append( Point( A.x-i*(A.x-C.x)/((N-1)//5+1) , A.y-i*(A.y-C.y)/((N-1)//5+1) , gz ) )
+            formation_points.append( Point( D.x-i*(D.x-B.x)/((N-1)//5+1) , D.y+i*(B.y-D.y)/((N-1)//5+1) , gz ) )
+            formation_points.append( Point( C.x-i*(C.x-E.x)/((N-1)//5+1) , C.y-i*(C.y-E.y)/((N-1)//5+1) , gz ) )
+            formation_points.append( Point( D.x+i*(E.x-D.x)/((N-1)//5+1) , D.y+i*(D.y-E.y)/((N-1)//5+1) , gz ) )
+
+
 
         #merkez etrafinda aci kadar gore dondurme
         rotate(formation_points, center, yaw)
 
-        return formation_points
+        return formation_points[:N]
     
     
     def yildiz(self, center, yaw, N, uav_distance):
