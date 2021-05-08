@@ -7,15 +7,13 @@ n = 4
 for uav in uavs[n:]:
     uav.land(z=0, duration=2, sleep=0)
 
-uavs = uavs[:n]
-
 """
 duration : inisten onceki bekleyis
 """
 
 duration = 30 
 
-swarm0 = Swarm(uavs)
+swarm0 = Swarm(uavs[:n])
 
 timeHelper.sleep(10)
 
