@@ -5,37 +5,34 @@ using namespace std;
 #ifndef NEAREST_DISTANCE
 #define NEAREST_DISTANCE
 
-Point normalize(Point a){
-    long double length = sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
-    return Point(a.x / length, a.y / length, a.z / length);
-}
-
-Point crossProduct(Point a, Point b){
-    return Point(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
-}
-
-long double dotProduct(Point a, Point b){
-    return a.x * b.x + a.y * b.y + a.z * b.z;
+long double distanceBetween2Points(Point a, Point b){
+    long double xfark = (a.x - b.x)*(a.x - b.x);
+    long double yfark = (a.y - b.y)*(a.y - b.y);
+    long double zfark = (a.z - b.z)*(a.z - b.z);
+    return sqrt(xfark + yfark + zfark);
 }
 
 long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
-    Point X, Y, Z, a1, a2, b;
+    long double lineSegment, side1, side2, halfPerimeter, area, bx, by;
+    Point a1, a2, b;
 
-    X = Point(a2tmp.x - a1tmp.x, a2tmp.y - a1tmp.y, a2tmp.z - a1tmp.z);
-    X = normalize(X);
-    Z = crossProduct(X, Point(btmp.x - a1tmp.x, btmp.y - a1tmp.y, btmp.z - a1tmp.z));
-    Z = normalize(Z);
-    Y = crossProduct(Z,X);
+    lineSegment = distanceBetween2Points(a1tmp, a2tmp);
+    side1 = distanceBetween2Points(a1tmp, btmp);
+    side2 = distanceBetween2Points(a2tmp, btmp);
 
-    const Point& O = a1tmp;
+    halfPerimeter = (lineSegment + side1 + side2)/2.0;
+    area = sqrt(halfPerimeter * (halfPerimeter - side1) * (halfPerimeter - side2) * (halfPerimeter - lineSegment));
 
-    long double x0 = 0, y0 = 0;
-    long double x1 = sqrt((a2tmp.x - a1tmp.x) * (a2tmp.x - a1tmp.x) + (a2tmp.y - a1tmp.y) * (a2tmp.y - a1tmp.y) + (a2tmp.z - a1tmp.z) * (a2tmp.z - a1tmp.z)), y1 = 0;
-    long double x2 = dotProduct(Point(btmp.x - a1tmp.x, btmp.y - a1tmp.y, btmp.z - a1tmp.z),X), y2 = dotProduct(Point(btmp.x - a1tmp.x, btmp.y - a1tmp.y, btmp.z - a1tmp.z),Y);        
+    by = ((2 * area) / lineSegment);
+    bx = (side2*side2 - side1*side1 - lineSegment*lineSegment)/(-2*lineSegment);
 
-    a1 = Point(x0, y0, 0);
-    a2 = Point(x1, y1, 0);
-    b = Point(x2, y2, 0);
+    if(lineSegment < 0.00001) lineSegment = 0;
+    if(abs(bx) < 0.00001) bx = 0;
+    if(abs(by) < 0.00001) by = 0;
+    
+    a1 = Point(0, 0, 0);
+    a2 = Point(lineSegment, 0, 0);
+    b = Point(bx, by, 0);
 
     long double egim1a, egim1b, egim2a, egim2b, egim2, sbt1, sbt2;
 
@@ -47,15 +44,15 @@ long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
 
     egim1a = a2.y - a1.y;
     egim1b = a2.x - a1.x;
-    
-    if(egim1a == 0){ // a1 ile a2 yan yana
+
+    if(abs(egim1a) < 0.00001){ // a1 ile a2 yan yana
         if(((a1.x <= b.x) && (b.x <= a2.x)) || ((a2.x <= b.x) && (b.x <= a1.x))){
             return abs(b.y - a1.y);
         }
         return min(dist1, dist2);
     }
 
-    if(egim1b == 0){ // a1 ile a2 ust uste
+    if(abs(egim1b) < 0.00001){ // a1 ile a2 ust uste
 
         if(((a1.y <= b.y) && (b.y <= a2.y)) || ((a2.y <= b.y) && (b.y <= a1.y))){
             return abs(b.x - a1.x);
@@ -68,7 +65,7 @@ long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
     egim2b = egim1a;
 
     egim2 = egim2a / egim2b;
-
+    cout << egim2b << endl;
     sbt1 = a1.y - egim2 * a1.x;
     sbt2 = a2.y - egim2 * a2.x;
 

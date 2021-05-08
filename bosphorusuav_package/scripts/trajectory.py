@@ -97,7 +97,7 @@ if __name__ == '__main__':
             )
         
         ax.scatter(0, 0, 0, color='white')
-        ax.scatter(350, 350, 200, color='white')
+        ax.scatter(3.5, 3.5, 2, color='white')
 
         plt.show()
 

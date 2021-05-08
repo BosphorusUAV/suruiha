@@ -4,11 +4,8 @@
 #include"modified_dijkstra.h"
 using namespace std;
 
-const int64_t INF = 1e17;
-const int mod = 1e9+7;
-
-const double X = 350, Y = 350, Z = 200; 
-const double EX = 20, EY = 20, EZ = 20;
+const double X = 3.5, Y = 3.5, Z = 2; 
+const double EX = 0.2, EY = 0.2, EZ = 0.2;
 const int K = 5;
 const int NX = X/EX, NY = Y/EY, NZ = Z/EZ;
 
@@ -91,8 +88,8 @@ int main(int f, char** files){
     for(int i = 0; i < n; i++){
         double sx, sy, sz, ex, ey, ez;
         cin >> sx >> sy >> sz >> ex >> ey >> ez;
-        S.push_back(Point(sx*100, sy*100, sz*100));
-        E.push_back(Point(ex*100, ey*100, ez*100));
+        S.push_back(Point(sx, sy, sz));
+        E.push_back(Point(ex, ey, ez));
     }
 
     for(auto p : S) risk_points.push_back(p);
@@ -107,11 +104,11 @@ int main(int f, char** files){
         risk_points.push_back(Point(x, y, z));
     }
 
-    // for(auto p : risk_points){
+    for(auto p : risk_points){
 
-    //     p.err();
-    //     cerr << nearestDistance(Point(100, 100, 100), Point(300, 100, 100), Point(200, 100, 1)) << "\n";
-    // }
+        // p.err();
+        cerr << nearestDistance(Point(1, 1, 1), Point(3, 1, 1), Point(2, 0.5, 1)) << "\n";
+    }
 
     for(int i = 0; i < n; i++){
         // cerr << "uav " << i << " calculating\n";
