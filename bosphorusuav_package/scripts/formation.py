@@ -271,6 +271,9 @@ class Formation:
         gx = center.x
         gy = center.y
         gz = center.z
+        
+        if N>5:
+            Rate*=2
 
         #noktalar
         formation_points.append( Point( gx,                      gy+0.8506508083520*Rate, gz ) )
