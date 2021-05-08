@@ -22,13 +22,13 @@ swarm0.command(duration=second*3, sleep=second*15)
 swarm1 = swarm0.remove(uavs[:5], z=2, new_formation='besgen')
 swarm0.changeFormation(formation_type='besgen')
 
-swarm0.command(duration=second*3, sleep=second*3)
+swarm0.command(duration=second*3, sleep=0)
 swarm1.command(duration=second*3, sleep=second*3)
 
-swarm0.navigation(Point(5, 5, 1))
+swarm0.navigation(Point(3, 3, 1))
 swarm1.navigation(Point(1, 1, 1))
 
-swarm0.command(duration=second*3, sleep=second*15)
+swarm0.command(duration=second*3, sleep=0)
 swarm1.command(duration=second*3, sleep=second*15)
 
 swarm0.navigation(Point(0, 0, -0.9), relative=True)
