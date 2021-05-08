@@ -9,8 +9,7 @@ for uav in uavs[n:]:
 
 uavs = uavs[:9]
 
-duration=30
-d = 10
+second = 1
 
 swarm0 = Swarm(uavs)
 
@@ -21,16 +20,10 @@ swarm0.changeFormation(
     uav_distance=1, 
     center=Point(None, None, 1)
 )
-swarm0.command(duration=d, inorder=0, sleep=duration)
+swarm0.command(duration=second*3, inorder=0, sleep=second*5)
 
-
-
-for uav in uavs:
-    p = uav.getPosition()
-    uav.goTo(Point(p.x, p.y, 0.1), duration=d)
-
-timeHelper.sleep(duration)
+swarm0.navigation(Point(0, 0, -0.95), relative=True)
+swarm0.command(duration=second*3, sleep=second*5)
 
 for uav in uavs:
     uav.land(z=0, duration=2, sleep=0)
-timeHelper.sleep(5)
