@@ -16,8 +16,6 @@ swarm0 = Swarm(uavs)
 
 timeHelper.sleep(duration)
 
-inventory = ['ucgen', 'kare', 'besgen', 'yildiz', 'V', 'hilal']
-
 swarm0.changeFormation( 
     formation_type='ucgen', 
     uav_distance=1, 

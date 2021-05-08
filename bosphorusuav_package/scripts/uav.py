@@ -35,9 +35,9 @@ class UAV:
         self.uav.cmdVelocityWorld([x, y, z], w)
     
 
-    def goTo(self, point:Point, yaw=0, duration=1, sleep=0):
+    def goTo(self, point:Point, yaw=0, relative=False, duration=1, sleep=0):
 
-        self.uav.goTo(point.vector(), yaw, duration)
+        self.uav.goTo(point.vector(), yaw, duration, relative=relative)
         self.sleep(sleep)
 
     def sleep(self, second):

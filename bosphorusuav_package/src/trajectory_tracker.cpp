@@ -104,19 +104,9 @@ int main(int f, char** files){
         risk_points.push_back(Point(x, y, z));
     }
 
-    for(auto p : risk_points){
-
-        // p.err();
-        cerr << nearestDistance(Point(1, 1, 1), Point(3, 1, 1), Point(2, 0.5, 1)) << "\n";
-    }
-
     for(int i = 0; i < n; i++){
-        // cerr << "uav " << i << " calculating\n";
         Cube* s = inside(S[i], 0);
         Cube* e = inside(E[i], K-1);
-
-        // for(auto p : risk_points) cerr << p.x << " " << p.y << " " << p.z << "\n";
-        
 
         auto P = find_path(s, e, risk_points);
         
@@ -125,7 +115,7 @@ int main(int f, char** files){
         
         
         for(int j = 1; j < P.size(); j++){
-            for(double a = 0; a <= 1; a += 0.02){
+            for(double a = 0; a <= 1; a += 0.1){
                 risk_points.push_back(
                     Point(
                         P[j-1].x + (P[j].x - P[j-1].x) * a,

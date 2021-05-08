@@ -6,7 +6,7 @@ using namespace std;
 #ifndef MODIFIED_DIJKSTRA
 #define MODIFIED_DIJKSTRA
 
-const double risk_threshold = 0.5;
+const double risk_threshold = 0.3;
 
 double risk_func(double dist){
     if(dist <= risk_threshold) return 1;
@@ -15,7 +15,10 @@ double risk_func(double dist){
 bool risk(Point& A, Point& B, vector<Point>& risk_points, Cube* s, Cube* e){
     double ret = 0;
     for(auto r : risk_points){
-        if(risk_func(nearestDistance(A, B, r))) return true;
+        if(
+            dist(A, s->point) > risk_threshold &&
+            dist(B, e->point) > risk_threshold &&
+            risk_func(nearestDistance(A, B, r))) return true;
     }
     return false;
 }
@@ -34,7 +37,7 @@ vector<Point> find_path(Cube* s, Cube* e, vector<Point>& risk_points){
         Q.pop();
         if(cube->visited) continue;
         cube->visited = true;
-        cube->debug();
+        // cube->debug();
 
         for(auto adj : cube->adj){
             if(!risk(adj->point, from->point, risk_points, s, e)){
