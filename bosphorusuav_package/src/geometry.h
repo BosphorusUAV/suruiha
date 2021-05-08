@@ -5,7 +5,7 @@ using namespace std;
 #define GEOMETRY
 
 struct Point{
-    long double x, y, z;
+    double x, y, z;
     Point(double _x=0, double _y=0, double _z=0): x(_x), y(_y), z(_z){}
 
     bool operator==(Point A){
@@ -31,7 +31,7 @@ struct Cube{
     
     // variable
     Cube* from = nullptr;
-    long double val = 1e18;
+    double val = 1e18;
     bool visited = false;
 
     Cube(Point _point=Point(), double _val=1e18, int _k=0):point(_point), val(_val), k(_k){}
@@ -54,7 +54,7 @@ struct Cube{
     }
 };
 
-long double dist(Point a, Point b){
+double dist(Point a, Point b){
     return sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y) + (a.z-b.z)*(a.z-b.z));
 }
 
