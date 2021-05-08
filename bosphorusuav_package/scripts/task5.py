@@ -31,7 +31,8 @@ uavs[n-1].land(z=0, duration=2, sleep=0.5)
 
 timeHelper.sleep(15)
 
-for uav in uavs[:n-1]:
-    uav.goTo(Point(0,0,-1), relative=True, duration=2, sleep=0)
+swarm1.navigation(Point(0,0,-1), relative=True)
+swarm1.command(duration=5, inorder=0, sleep=10)
 
-timeHelper.sleep(25)
+for uav in uavs[:n-1]:
+    uav.land(z=0, duration=2, sleep=0.5)
