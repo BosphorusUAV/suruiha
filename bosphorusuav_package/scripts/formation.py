@@ -162,7 +162,7 @@ class Formation:
         formation_points = []
 
         #ucgenin bir kenar uzunluğu
-        edge_length = ((N+2)/3) * uav_distance  
+        edge_length = ((int)((N+2)/3)) * uav_distance  
         
         #agırlık merkezinin koselere uzaklığı
         g = edge_length / (3 ** (0.5))
