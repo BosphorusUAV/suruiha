@@ -32,6 +32,6 @@ uavs[n-1].land(z=0, duration=2, sleep=0.5)
 timeHelper.sleep(15)
 
 for uav in uavs[:n-1]:
-    uav.land(z=0, duration=2, sleep=0.5)
+    uav.goTo(Point(0,0,-1), relative=True, duration=2, sleep=0)
 
 timeHelper.sleep(25)
