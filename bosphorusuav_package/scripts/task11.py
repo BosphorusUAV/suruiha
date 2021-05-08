@@ -24,29 +24,29 @@ swarm0.changeFormation(
 )
 swarm0.command(duration=3, inorder=0, sleep=5)
 
-swarm0.navigation(Point(5, 0, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(2, 0, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(0, 5, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(0, 2, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(-5, 0, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(-2, 0, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(0, -5, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(0, -2, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(5, 5, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(2, 2, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(-5, 5, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(-2, 2, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(5, -5, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(2, -2, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
-swarm0.navigation(Point(-5, -5, 0), relative=True)
-swarm0.command(duration=4, inorder=0, sleep=5)
+swarm0.navigation(Point(-2, -2, 0), relative=True)
+swarm0.command(duration=2, inorder=0, sleep=5)
 
 for uav in uavs:
     uav.land(z=0, duration=2, sleep=0)
