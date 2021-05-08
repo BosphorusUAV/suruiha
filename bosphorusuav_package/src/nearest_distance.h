@@ -5,19 +5,19 @@ using namespace std;
 #ifndef NEAREST_DISTANCE
 #define NEAREST_DISTANCE
 
-long double distanceBetween2Points(Point a, Point b){
-    long double xfark = (a.x - b.x)*(a.x - b.x);
-    long double yfark = (a.y - b.y)*(a.y - b.y);
-    long double zfark = (a.z - b.z)*(a.z - b.z);
+double distanceBetween2Points(Point a, Point b){
+    double xfark = (a.x - b.x)*(a.x - b.x);
+    double yfark = (a.y - b.y)*(a.y - b.y);
+    double zfark = (a.z - b.z)*(a.z - b.z);
     return sqrt(xfark + yfark + zfark);
 }
 
-long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
+double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
     if(a1tmp == a2tmp){
         return distanceBetween2Points(a1tmp,btmp);
     }
     
-    long double lineSegment, side1, side2, halfPerimeter, area, bx, by;
+    double lineSegment, side1, side2, halfPerimeter, area, bx, by;
     Point a1, a2, b;
 
     lineSegment = distanceBetween2Points(a1tmp, a2tmp);
@@ -38,7 +38,7 @@ long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
     a2 = Point(lineSegment, 0, 0);
     b = Point(bx, by, 0);
 
-    long double egim1a, egim1b, egim2a, egim2b, egim2, sbt1, sbt2;
+    double egim1a, egim1b, egim2a, egim2b, egim2, sbt1, sbt2;
 
     if(a1.x == a2.x && a1.y == a2.y){ // a1 esittir a2
         return sqrt((a1.x-b.x)*(a1.x-b.x)+(a1.y-b.y)*(a1.y-b.y));
@@ -74,8 +74,8 @@ long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
     sbt2 = a2.y - egim2 * a2.x;
 
     if((egim2 * b.x + sbt1 <= b.y && b.y <= egim2 * b.x +sbt2) || (egim2 * b.x + sbt2 <= b.y && b.y <= egim2 * b.x +sbt1)){
-        long double kesisimx = ((b.y - egim2 * b.x) - (a1.y - (egim1a / egim1b) * a1.x)) / ((egim1a / egim1b) - egim2);
-        long double kesisimy = kesisimx * egim2 + (b.y - egim2 * b.x);
+        double kesisimx = ((b.y - egim2 * b.x) - (a1.y - (egim1a / egim1b) * a1.x)) / ((egim1a / egim1b) - egim2);
+        double kesisimy = kesisimx * egim2 + (b.y - egim2 * b.x);
         
         return sqrt((kesisimx-b.x)*(kesisimx-b.x)+(kesisimy-b.y)*(kesisimy-b.y));
     }
