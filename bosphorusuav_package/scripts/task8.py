@@ -9,25 +9,29 @@ for uav in uavs[n:]:
 
 uavs = uavs[:n]
 
-d1=30
-d2 = 10
+second = 1
 
 swarm0 = Swarm(uavs[:5])
 swarm1 = Swarm(uavs[5:])
 
 for uav in uavs:
-    uav.goTo(Point(0, 0, 1), relative=True, duration=d2)
-timeHelper.sleep(d1*1.5)
+    uav.goTo(Point(0, 0, 1), relative=True, duration=second*3)
+timeHelper.sleep(second*3)
 
 swarm0.changeFormation(formation_type='besgen')
 swarm1.changeFormation(formation_type='besgen')
 
+swarm0.command(duration=second*3, sleep=second*15)
+
 swarm0.add(uavs[5:])
 swarm0.changeFormation(formation_type='yildiz')
 
-swarm0.command(duration=d2, sleep=d1*1.5)
+swarm0.command(duration=second*3, sleep=second*15)
+
+swarm0.navigation(Point(0, 0, -0.9), relative=True)
+swarm0.command(duration=second*3, sleep=second*5)
 
 for uav in uavs:
-    uav.land(z=0, duration=d2, sleep=0.5)
+    uav.land(z=0, duration=second*3, sleep=0)
 
-timeHelper.sleep(5)
+timeHelper.sleep(10)
