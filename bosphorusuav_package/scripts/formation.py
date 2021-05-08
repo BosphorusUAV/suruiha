@@ -22,6 +22,7 @@ class Formation:
             'ucgen':    self.ucgen,
             'kare':     self.kare,
             'besgen':   self.besgen,
+            'altigen':  self.altigen,
             'yildiz':   self.yildiz,
             'V':        self.V,
             'hilal':    self.hilal,
@@ -303,6 +304,29 @@ class Formation:
 
         return formation_points[:N]
     
+    def altigen(self, center, yaw, N, uav_distance):
+        formation_points = []
+
+        assert N <= 6
+
+        gx = center.x
+        gy = center.y
+        gz = center.z
+
+        sin30 = (np.sin((np.pi)/6))
+        cos30 = (np.cos((np.pi)/6))
+
+        formation_points.append(Point(gx - uav_distance, gy, gz))
+        formation_points.append(Point(gx + uav_distance, gy, gz))
+        formation_points.append(Point(gx - uav_distance * sin30, gy + uav_distance * cos30, gz))
+        formation_points.append(Point(gx + uav_distance * sin30, gy + uav_distance * cos30, gz))
+        formation_points.append(Point(gx - uav_distance * sin30, gy - uav_distance * cos30, gz))
+        formation_points.append(Point(gx + uav_distance * sin30, gy - uav_distance * cos30, gz))
+
+        rotate(formation_points, center, yaw)
+        
+        return formation_points[:N]
+
     
     def yildiz(self, center, yaw, N, uav_distance):
         formation_points = []
