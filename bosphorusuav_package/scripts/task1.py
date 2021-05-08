@@ -4,6 +4,7 @@ from formation import Formation
 from swarm import Swarm, swarms
 
 n = 9
+
 for uav in uavs[n:]:
     uav.land(z=0, duration=2, sleep=0)
 
@@ -13,7 +14,7 @@ second = 1
 
 swarm0 = Swarm(uavs)
 
-timeHelper.sleep(duration)
+timeHelper.sleep(5)
 
 swarm0.changeFormation( 
     formation_type='ucgen', 
