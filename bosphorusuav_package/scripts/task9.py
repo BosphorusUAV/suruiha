@@ -2,6 +2,7 @@ from point import Point
 from uav import UAV, uavs, timeHelper
 from formation import Formation
 from swarm import Swarm, swarms
+import numpy as np
 
 n = 9
 for uav in uavs[n:]:
@@ -29,8 +30,9 @@ swarm0.command(duration = 5, inorder=0, sleep = 2)
 for ang in rotangles :
     x = ang / ((np.pi) / 36)
     for i in range(int(x)):
-        swarm0.rotation((np.pi) / 36)
-        swarm0.command(duration=5, inorder=0, sleep=0.05)
+        swarm0.rotation(((np.pi) / 36))
+        swarm0.command(duration=0.2, inorder=0, sleep=0.2)
+        
     timeHelper.sleep(wait)
 
 swarm0.navigation(Point(0,0,-1) ,relative = True)
