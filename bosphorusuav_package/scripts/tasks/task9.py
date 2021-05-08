@@ -11,6 +11,7 @@ uavs = uavs[:9]
 
 duration=30
 d = 10
+wait = 30
 
 swarm0 = Swarm(uavs)
 
