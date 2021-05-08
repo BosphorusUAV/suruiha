@@ -9,7 +9,7 @@ for uav in uavs[n:]:
 
 uavs = uavs[:9]
 
-duration=30
+duration=10
 d = 10
 wait = 30
 
