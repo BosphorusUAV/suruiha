@@ -116,7 +116,7 @@ class Formation:
             np.savetxt(f, [p.vector() for p in self.uav_points], fmt='%.5f')
             np.savetxt(f, [p.vector() for p in formation_points], fmt='%.5f')
         
-        os.system('bitmaskdp.exe')
+        os.system('./bitmaskdp.exe')
 
         with open('points.out', 'r') as f:
             dist = float(f.readline())
