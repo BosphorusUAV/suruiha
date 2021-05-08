@@ -50,6 +50,8 @@ class Formation:
         self.center = self.__getcenter(center)
 
         angles = self.__angles if yaw == None else [yaw]
+        if self.N > 15:
+            angles = [0]
         
         try:
             self.__distance = None
@@ -114,7 +116,7 @@ class Formation:
             np.savetxt(f, [p.vector() for p in self.uav_points], fmt='%.5f')
             np.savetxt(f, [p.vector() for p in formation_points], fmt='%.5f')
         
-        os.system('./bitmaskdp.exe')
+        os.system('bitmaskdp.exe')
 
         with open('points.out', 'r') as f:
             dist = float(f.readline())
@@ -421,6 +423,9 @@ class Formation:
 
 
 if __name__ == '__main__':
+    from matplotlib import pyplot as plt
+    from time import time
+
     ihalar = [
         Point(0, 0, 0),
         Point(1, 1, 0),
@@ -433,14 +438,28 @@ if __name__ == '__main__':
         Point(-0.5, 0.5, 0),
         Point(0.5, 0.5, 0),
         Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
+        Point(0.05, 0.05, 0),
         Point(0.05, 0.05, 0)
     ]
 
     formasyon = Formation()
-    formasyon.createFormation(ihalar[:12], 'ucgen', uav_distance=1.5, center=Point(None, None, 1)) 
+    b = time()
+    formasyon.createFormation(ihalar[:20], 'ucgen', uav_distance=1, center=Point(None, None, 1)) 
+    print(time()-b, 'second')
     #test etmek icin formasyon tipini degistir
 
-    from matplotlib import pyplot as plt
 
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')

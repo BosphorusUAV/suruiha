@@ -1,25 +1,20 @@
 #include<bits/stdc++.h>
-#define ii pair<int,int>
-#define all(x) (x).begin(),(x).end()
-#define sz(x) ((int)(x).size())
-#define int long long int
 using namespace std;
 
 const int64_t inf = 1e17;
-const int mod = 1e9+7;
 
 struct Point{
-	long double x, y, z;
+	double x, y, z;
 	Point(double _x, double _y, double _z): x(_x), y(_y), z(_z){}
 	void print(){
 		cout  << x << " " << y << " " << z << " ";
 	}
 };
-long double dist(Point a, Point b){
+double dist(Point a, Point b){
 	return sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y) + (a.z-b.z)*(a.z-b.z));
 }
 
-pair<long double, int> dp[21][1<<20];
+pair<double, int> dp[21][1<<20];
 
 double totaldist = 0;
 
@@ -82,12 +77,12 @@ int32_t main(){
 
 	vector<Point> A, B;
 	for(int i = 0; i < N; i++){
-		long double x, y, z;
+		double x, y, z;
 		cin >> x >> y >> z;
 		B.push_back(Point(x, y, z));
 	}
 	for(int i = 0; i < M; i++){
-		long double x, y, z;
+		double x, y, z;
 		cin >> x >> y >> z;
 		A.push_back(Point(x, y, z));
 	}

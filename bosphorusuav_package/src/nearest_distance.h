@@ -13,6 +13,10 @@ long double distanceBetween2Points(Point a, Point b){
 }
 
 long double nearestDistance(Point a1tmp, Point a2tmp, Point btmp){
+    if(a1tmp == a2tmp){
+        return distanceBetween2Points(a1tmp,btmp);
+    }
+    
     long double lineSegment, side1, side2, halfPerimeter, area, bx, by;
     Point a1, a2, b;
 
