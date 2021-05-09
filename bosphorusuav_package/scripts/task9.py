@@ -6,7 +6,7 @@ import numpy as np
 
 n = 9
 for uav in uavs[n:]:
-    uav.land(z=0, duration=1, sleep=0)
+    uav.land(z=0, duration=0, sleep=0)
 
 uavs = uavs[:9]
 
@@ -25,7 +25,7 @@ swarm0.changeFormation(
     uav_distance=1,
     center=Point(None, None, 1)
 )
-swarm0.command(duration = 5, inorder=0, sleep = 2)
+swarm0.command(duration = 5, inorder=0, sleep = 5)
 
 for ang in rotangles :
     x = ang / ((np.pi) / 36)

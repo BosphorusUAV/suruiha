@@ -5,7 +5,7 @@ from swarm import Swarm, swarms
 
 n = 10
 for uav in uavs[n:]:
-    uav.land(z=0, duration=2, sleep=0)
+    uav.land(z=0, duration=0, sleep=0)
 
 uavs = uavs[:n]
 
@@ -13,8 +13,13 @@ second = 1
 
 swarm0 = Swarm(uavs)
 
-swarm0.navigation(Point(0, 0, 1), relative=True)
-swarm0.command(duration=second*3, sleep=second*3)
+for uav in uavs:
+    p = uav.getPosition()
+    uav.goTo(Point(p.x, p.y, 1), duration=3)
+
+timeHelper.sleep(10)
+#swarm0.navigation(Point(0, 0, 1), relative=True)
+#swarm0.command(duration=second*3, sleep=second*3)
 
 swarm0.changeFormation(formation_type='yildiz')
 swarm0.command(duration=second*3, sleep=second*15)

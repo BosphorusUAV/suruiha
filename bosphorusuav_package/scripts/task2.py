@@ -5,7 +5,7 @@ from swarm import Swarm, swarms
 
 n = 8
 for uav in uavs[n:]:
-    uav.land(z=0, duration=2, sleep=0)
+    uav.land(z=0, duration=0, sleep=0)
 
 uavs = uavs[:8]
 
