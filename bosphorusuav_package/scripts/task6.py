@@ -30,27 +30,29 @@ swarm0.changeFormation(
     uav_distance=1.41421, 
     center=Point(None, None, 1)
 )
-swarm0.command(duration=2, inorder=0, sleep=10)
+
+swarm0.command(duration=5, inorder=0, sleep=10)
 
 swarm0.add([uavs[4]])
 swarm0.changeFormation(
     formation_type='besgen',
     center=Point(None,None,1)
 )
-swarm0.command(duration=4, inorder=0, sleep=10)
+swarm0.command(duration=4.5, inorder=0, sleep=0)
 
+timeHelper.sleep(15)
 
 swarm0.add([uavs[5]])
 swarm0.changeFormation(
     formation_type='altigen',
     center=Point(None,None,1)
 )
-swarm0.command(duration=4, inorder=0, sleep=10)
+swarm0.command(duration=4.5, inorder=0, sleep=10)
 
-timeHelper.sleep(duration)
+timeHelper.sleep(15)
 
 swarm0.navigation(Point(0,0,-1), relative=True)
-swarm0.command(duration=5, inorder=0, sleep=3)
+swarm0.command(duration=5, inorder=0, sleep=10)
 
 for uav in uavs[:n-1]:
     uav.land(z=0, duration=2, sleep=0.5)
