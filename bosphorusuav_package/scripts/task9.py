@@ -30,12 +30,12 @@ for ang in rotangles :
         for i in range(abs(int(x))):
             swarm0.rotation(((np.pi) / 36))
             swarm0.command(duration=0.2, inorder=0, sleep=0.2)
-            timeHelper.sleep(5)
+        timeHelper.sleep(5)
     else :
         for i in range(abs(int(x))):
             swarm0.rotation(-((np.pi) / 36))
             swarm0.command(duration=0.2, inorder=0, sleep=0.2)
-            timeHelper.sleep(5)
+        timeHelper.sleep(5)
 
 swarm0.navigation(Point(0,0,-1) ,relative = True)
 swarm0.command(duration=2.5, inorder=0, sleep = 2.5)
