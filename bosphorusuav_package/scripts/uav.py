@@ -1,7 +1,7 @@
 from pycrazyswarm import Crazyswarm
 from point import Point
 
-second = 1
+second = 2
 class Timer:
     def __init__(self):
         self.timeHelper = swarm.timeHelper

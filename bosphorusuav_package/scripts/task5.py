@@ -2,6 +2,9 @@ from point import Point
 from uav import UAV, uavs, timeHelper
 from formation import Formation
 from swarm import Swarm, swarms
+from random import shuffle
+
+shuffle(uavs)
 
 n = 10
 inventory = ['ucgen', 'kare', 'besgen', 'yildiz', 'V', 'hilal']

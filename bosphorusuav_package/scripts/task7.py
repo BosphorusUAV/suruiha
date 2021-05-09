@@ -17,6 +17,8 @@ for uav in uavs:
     p = uav.getPosition()
     uav.goTo(Point(p.x, p.y, 1), duration=3)
 
+timeHelper.sleep(3)
+
 swarm0.changeFormation(formation_type='yildiz')
 swarm0.command(duration=3, sleep=15)
 

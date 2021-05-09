@@ -12,6 +12,8 @@ uavs = uavs[:n]
 swarm0 = Swarm(uavs[:5])
 swarm1 = Swarm(uavs[5:])
 
+timeHelper.sleep(10)
+
 for uav in uavs:
     p = uav.getPosition()
     uav.goTo(Point(p.x, p.y, 1), duration=3)
@@ -22,7 +24,7 @@ swarm0.changeFormation(formation_type='besgen',center=Point(None,None,2))
 swarm1.changeFormation(formation_type='besgen')
 
 swarm0.command(duration=3, sleep=0)
-swarm1.command(duration=3, sleep=15)
+swarm1.command(duration=3, sleep=3)
 
 swarm0.add(uavs[5:])
 swarm0.changeFormation(formation_type='yildiz',center=Point(None,None,1))

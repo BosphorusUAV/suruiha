@@ -17,8 +17,10 @@ timeHelper.sleep(10)
 inventory = ['ucgen', 'kare', 'besgen', 'yildiz', 'V', 'hilal']
 
 for uav in uavs:
-    uav.land(z=1, duration=2.7, sleep=0)
+    p = uav.getPosition()
+    uav.goTo(Point(p.x, p.y, 1), duration=3)
 
+timeHelper.sleep(5)
 #yildiz formasyonu
 swarm0.changeFormation(
     formation_type='yildiz', 
