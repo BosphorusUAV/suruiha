@@ -9,46 +9,29 @@ for uav in uavs[n:]:
 
 uavs = uavs[:n]
 
-duration=5
-
 swarm0 = Swarm(uavs)
 
-timeHelper.sleep(duration)
+timeHelper.sleep(10)
 
 inventory = ['ucgen', 'kare', 'besgen', 'yildiz', 'V', 'hilal']
 
 swarm0.changeFormation( 
-    formation_type='V', 
+    formation_type='besgen', 
     uav_distance=1, 
     center=Point(None, None, 1)
 )
-swarm0.command(duration=3, inorder=0, sleep=5)
-
-swarm0.navigation(Point(2, 0, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
-
-swarm0.navigation(Point(0, 2, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
+swarm0.command(duration=2.7, inorder=0, sleep=15)
 
 swarm0.navigation(Point(-2, 0, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
+swarm0.command(duration=2.5, inorder=0, sleep=15)
 
 swarm0.navigation(Point(0, -2, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
+swarm0.command(duration=2.5, inorder=0, sleep=15)
 
 swarm0.navigation(Point(2, 2, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
-
-swarm0.navigation(Point(-2, 2, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
-
-swarm0.navigation(Point(2, -2, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
-
-swarm0.navigation(Point(-2, -2, 0), relative=True)
-swarm0.command(duration=2, inorder=0, sleep=5)
+swarm0.command(duration=2.5, inorder=0, sleep=15)
 
 for uav in uavs:
-    uav.land(z=0, duration=2, sleep=0)
+    uav.land(z=0, duration=2.5, sleep=0)
 
 timeHelper.sleep(10)
