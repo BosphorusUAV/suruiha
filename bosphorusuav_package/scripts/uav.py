@@ -1,8 +1,15 @@
 from pycrazyswarm import Crazyswarm
 from point import Point
 
+second = 1
+class Timer:
+    def __init__(self):
+        self.timeHelper = swarm.timeHelper
+    def sleep(self, duration):
+        self.timeHelper.sleep(duration*second)
+
 swarm = Crazyswarm(crazyflies_yaml="crazyflies.yaml")
-timeHelper = swarm.timeHelper
+timeHelper = Timer()
 uavs = swarm.allcfs.crazyflies
 s = len(uavs)
 
@@ -15,13 +22,13 @@ class UAV:
 
     def takeoff(self, z=1, duration=1, sleep=0):
         
-        self.uav.takeoff(z, duration)
+        self.uav.takeoff(z, duration*second)
         self.sleep(sleep)        
 
 
     def land(self, z=0.05, duration=1, sleep=0):
 
-        self.uav.land(z, duration)
+        self.uav.land(z, duration*second)
         self.sleep(sleep)
 
 
@@ -37,10 +44,10 @@ class UAV:
 
     def goTo(self, point:Point, yaw=0, relative=False, duration=1, sleep=0):
 
-        self.uav.goTo(point.vector(), yaw, duration, relative=relative)
+        self.uav.goTo(point.vector(), yaw, duration*second, relative=relative)
         self.sleep(sleep)
 
-    def sleep(self, second):
-        timeHelper.sleep(second)
+    def sleep(self, duration):
+        timeHelper.sleep(duration*second)
 
 uavs = [UAV(i) for i in range(s)]
