@@ -36,8 +36,8 @@ for ang in rotangles :
     timeHelper.sleep(wait)
 
 swarm0.navigation(Point(0,0,-1) ,relative = True)
-swarm0.command(duration=d, inorder=0, sleep = 0)
+swarm0.command(duration=d, inorder=0, sleep = d)
 
 for uav in uavs:
-    uav.land(z=0, duration=2, sleep=0.5)
+    uav.land(z=0, duration=2, sleep=0)
 timeHelper.sleep(5)
