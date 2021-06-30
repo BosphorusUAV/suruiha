@@ -13,11 +13,11 @@ from scripts.controller import UAVController
 
 
 
-URI = uri_helper.uri_from_env(default='radio://0/80/2M/E7E7E7E701')
+URI = uri_helper.uri_from_env(default='radio://0/80/2M/E7E7E7E7E7')
 
 logging.basicConfig(level=logging.ERROR)
 
-position_estimate = [0, 0]
+position_estimate = [0, 0, 0]
 
 def log_pos_callback(timestamp, data, logconf):
     print(data)
@@ -42,7 +42,7 @@ if __name__ == '__main__':
         
         with MotionCommander(scf, default_height=0.2) as mc:
             
-            uav = UAVController(scf)
+            uav = UAVController(mc)
 
             while True:
 
@@ -51,6 +51,6 @@ if __name__ == '__main__':
                     position_estimate[1],
                     position_estimate[2]
                 )
-                uav.positioning(0, 0, 1)
+                uav.positioning(0, 0, 0.5)
                 
             

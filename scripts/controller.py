@@ -11,11 +11,11 @@ def multidimensionalSpeed(currx, curry, currz, tarx, tary, tarz, velocity):
     duration = speedvec / velocity
     return relx/duration, rely/duration, relz/duration
 
-class UAVController(Commander):
+class UAVController:
     
     
-    def __init__(self, crazyflie=None):
-        super().__init__(crazyflie)
+    def __init__(self, motion_commander:Commander):
+        self.mc = motion_commander
 
     
     def simple_move(self, x, y, z, yaw=0, velocity=0.2):
@@ -38,8 +38,8 @@ class UAVController(Commander):
 
 
     def setVelocity(self, x, y, z, yaw=0):
-
-        self.send_velocity_world_setpoint(x, y, z, yaw)
+ 
+        self.mc.start_linear_motion(x, y, z, yaw)
         
 
     def locationTuner(self, locx, locy, locz):
@@ -57,5 +57,5 @@ class UAVController(Commander):
         
         self.setVelocity(self.velx, self.vely, self.velz)
 
-    def calculateVelocity(dist,t):
+    def calculateVelocity(self, dist,t):
         return min(MAX_VELOCITY, 2*dist/t)
