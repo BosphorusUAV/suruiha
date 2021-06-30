@@ -44,13 +44,17 @@ if __name__ == '__main__':
             
             uav = UAVController(mc)
 
-            while True:
+            begin = time.time()
+
+            while time.time() - begin < 1.5:
 
                 uav.locationTuner(
                     position_estimate[0],
                     position_estimate[1],
                     position_estimate[2]
                 )
-                uav.positioning(0, 0, 0.5)
+                uav.move(0, 0, 0.5, duration=begin+2-time.time())
+
+                print(f'remaining time: {time.time() - begin + 2} second')
                 
             

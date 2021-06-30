@@ -48,14 +48,31 @@ class UAVController:
         self.locy = locy
         self.locz = locz
 
+        print(f'estimated position: [{self.locx}, {self.locy}, {self.locz}]')
+
+    
+    def move(self, x, y, z, duration=2):
         
+        self.velx = self.calculateVelocity(x - self.locx, duration)
+        self.vely = self.calculateVelocity(y - self.locy, duration)
+        self.velz = self.calculateVelocity(z - self.locz, duration)
+        
+        print(f'target position: [{x}, {y}, {z}]')
+        print(f'velocity: [{self.velx}, {self.vely}, {self.velz}]')
+
+        self.setVelocity(self.velx, self.vely, self.velz)
+
+
     def positioning(self, x, y, z):
         
         self.velx = self.calculateVelocity(x - self.locx, 0.1)
         self.vely = self.calculateVelocity(y - self.locy, 0.1)
         self.velz = self.calculateVelocity(z - self.locz, 0.1)
         
+        print(f'target position: [{x}, {y}, {z}]')
+        print(f'velocity: [{self.velx}, {self.vely}, {self.velz}]')
+
         self.setVelocity(self.velx, self.vely, self.velz)
 
     def calculateVelocity(self, dist,t):
-        return min(MAX_VELOCITY, 2*dist/t)
+        return min(MAX_VELOCITY, 2*abs(dist)/t) * dist / abs(dist)
