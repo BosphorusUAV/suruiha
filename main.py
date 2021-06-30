@@ -17,7 +17,7 @@ URI = uri_helper.uri_from_env(default='radio://0/80/2M/E7E7E7E7E7')
 
 logging.basicConfig(level=logging.ERROR)
 
-position_estimate = [0, 0, 0]
+position_estimate = [0, 0, 0, 0]
 
 def log_pos_callback(timestamp, data, logconf):
     #print(data)
@@ -25,6 +25,7 @@ def log_pos_callback(timestamp, data, logconf):
     position_estimate[0] = data['stateEstimate.x']
     position_estimate[1] = data['stateEstimate.y']
     position_estimate[2] = data['stateEstimate.z']
+    position_estimate[3] = data['stateEstimate.yaw']
 
 
 if __name__ == '__main__':
@@ -33,9 +34,12 @@ if __name__ == '__main__':
     with SyncCrazyflie(URI, cf=Crazyflie(rw_cache='./cache')) as scf:
         
         logconf = LogConfig(name='Position', period_in_ms=20)
+        
         logconf.add_variable('stateEstimate.x', 'float')
         logconf.add_variable('stateEstimate.y', 'float')
         logconf.add_variable('stateEstimate.z', 'float')
+        logconf.add_variable('stateEstimate.yaw', 'float')
+
         scf.cf.log.add_config(logconf)
         logconf.data_received_cb.add_callback(log_pos_callback)
         logconf.start()
@@ -51,7 +55,8 @@ if __name__ == '__main__':
                 uav.locationTuner(
                     position_estimate[0],
                     position_estimate[1],
-                    position_estimate[2]
+                    position_estimate[2],
+                    position_estimate[3]
                 )
                 uav.move(0, 0, 0.5, duration=begin+2-time.time())
 

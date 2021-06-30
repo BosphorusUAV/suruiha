@@ -42,25 +42,27 @@ class UAVController:
         self.mc.start_linear_motion(x, y, z, yaw)
         
 
-    def locationTuner(self, locx, locy, locz):
+    def locationTuner(self, locx, locy, locz, yaw):
 
         self.locx = locx
         self.locy = locy
         self.locz = locz
+        self.locyaw = yaw
 
         print(f'estimated position: [{self.locx}, {self.locy}, {self.locz}]')
 
     
-    def move(self, x, y, z, duration=2):
+    def move(self, x, y, z, yaw=0, duration=2):
         print(f'target position: [{x}, {y}, {z}]')
         
         self.velx = self.calculateVelocity(x - self.locx, duration)
         self.vely = self.calculateVelocity(y - self.locy, duration)
         self.velz = self.calculateVelocity(z - self.locz, duration)
+        self.velyaw = self.calculateVelocity(yaw, self.locyaw, 0.1)
         
         print(f'velocity: [{self.velx}, {self.vely}, {self.velz}]')
 
-        self.setVelocity(self.velx, self.vely, self.velz)
+        self.setVelocity(self.velx, self.vely, self.velz, self.velyaw)
 
 
     def positioning(self, x, y, z):
