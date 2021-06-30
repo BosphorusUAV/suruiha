@@ -1,7 +1,7 @@
 from cflib.crazyflie.commander import Commander
 from math import sqrt, log
 
-MAX_VELOCITY = 1
+MAX_VELOCITY = 0.3
 
 def multidimensionalSpeed(currx, curry, currz, tarx, tary, tarz, velocity):
     relx = tarx-currx
@@ -52,27 +52,29 @@ class UAVController:
 
     
     def move(self, x, y, z, duration=2):
+        print(f'target position: [{x}, {y}, {z}]')
         
         self.velx = self.calculateVelocity(x - self.locx, duration)
         self.vely = self.calculateVelocity(y - self.locy, duration)
         self.velz = self.calculateVelocity(z - self.locz, duration)
         
-        print(f'target position: [{x}, {y}, {z}]')
         print(f'velocity: [{self.velx}, {self.vely}, {self.velz}]')
 
         self.setVelocity(self.velx, self.vely, self.velz)
 
 
     def positioning(self, x, y, z):
+        print(f'target position: [{x}, {y}, {z}]')
         
         self.velx = self.calculateVelocity(x - self.locx, 0.1)
         self.vely = self.calculateVelocity(y - self.locy, 0.1)
         self.velz = self.calculateVelocity(z - self.locz, 0.1)
         
-        print(f'target position: [{x}, {y}, {z}]')
         print(f'velocity: [{self.velx}, {self.vely}, {self.velz}]')
 
         self.setVelocity(self.velx, self.vely, self.velz)
 
     def calculateVelocity(self, dist,t):
+        if dist == 0:
+            return 0
         return min(MAX_VELOCITY, 2*abs(dist)/t) * dist / abs(dist)

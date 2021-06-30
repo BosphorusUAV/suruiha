@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.ERROR)
 position_estimate = [0, 0, 0]
 
 def log_pos_callback(timestamp, data, logconf):
-    print(data)
+    #print(data)
     global position_estimate
     position_estimate[0] = data['stateEstimate.x']
     position_estimate[1] = data['stateEstimate.y']
@@ -38,7 +38,7 @@ if __name__ == '__main__':
         logconf.add_variable('stateEstimate.z', 'float')
         scf.cf.log.add_config(logconf)
         logconf.data_received_cb.add_callback(log_pos_callback)
-
+        logconf.start()
         
         with MotionCommander(scf, default_height=0.2) as mc:
             
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
             begin = time.time()
 
-            while time.time() - begin < 1.5:
+            while time.time() - begin < 0.7:
 
                 uav.locationTuner(
                     position_estimate[0],
@@ -55,6 +55,8 @@ if __name__ == '__main__':
                 )
                 uav.move(0, 0, 0.5, duration=begin+2-time.time())
 
-                print(f'remaining time: {time.time() - begin + 2} second')
+                print(f'remaining time: {1 - (time.time() - begin)} second')
+
+                assert time.time() - begin < 0.7
                 
             
