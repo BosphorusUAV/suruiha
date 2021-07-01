@@ -1,5 +1,4 @@
 import logging
-from scripts.controller import UAVController
 import time
 
 import cflib.crtp
@@ -10,6 +9,35 @@ from cflib.positioning.motion_commander import MotionCommander
 from cflib.utils import uri_helper
 
 from scripts.controller import UAVController
+from threading import Thread
+
+class Core(Thread):
+    def __init__(self, uav, ms=0.025):
+        Thread.__init__(self)
+        
+        self.uav = uav
+        self.ms = ms
+
+        self.running = True
+        self.daemon = True
+        self.start()
+    
+    def run(self):
+        
+        while self.running:
+
+            self.uav.locationTuner(
+                position_estimate[0],
+                position_estimate[1],
+                position_estimate[2],
+                position_estimate[3]
+            )
+            self.uav.control()
+
+            time.sleep(self.ms)
+
+    def stop(self):
+        self.running = False
 
 
 
@@ -46,22 +74,17 @@ if __name__ == '__main__':
         
         with MotionCommander(scf, default_height=0.2) as mc:
             
-            uav = UAVController(mc)
+            uav = UAVController(mc) 
 
-            begin = time.time()
-
-            while time.time() - begin < 0.7:
-
-                uav.locationTuner(
-                    position_estimate[0],
-                    position_estimate[1],
-                    position_estimate[2],
-                    position_estimate[3]
-                )
-                uav.move(0, 0, 0.5, duration=begin+2-time.time())
-
-                print(f'remaining time: {1 - (time.time() - begin)} second')
-
-                assert time.time() - begin < 0.7
-                
+            core = Core(uav, ms=0.025)
             
+            uav.addTarget(0, 0, 0.5, duration=2)
+
+            time.sleep(7)
+
+            uav.land(duration=2)
+
+            time.sleep(2)
+        
+            core.stop()
+    time.sleep(5)
