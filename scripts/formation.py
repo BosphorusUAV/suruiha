@@ -19,6 +19,7 @@ class Formation:
         self.__distance = None  
  
         self.inventory = {
+            'cizgi':    self.cizgi,
             'ucgen':    self.ucgen,
             'kare':     self.kare,
             'besgen':   self.besgen,
@@ -26,7 +27,8 @@ class Formation:
             'yildiz':   self.yildiz,
             'V':        self.V,
             'hilal':    self.hilal,
-            'rastgele': self.rastgele
+            'rastgele': self.rastgele,
+            'eskenar_dortgen': self.eskenar_dortgen
         }
 
     def createFormation(self, uav_points, formation_type='rastgele', uav_distance=1, center=Point(None, None, None), yaw=None):
@@ -160,6 +162,82 @@ class Formation:
 
         return formation_points
             
+    def cizgi(self, center, yaw, N, uav_distance):
+        formation_points = []
+
+        gx = center.x
+        gy = center.y
+        gz = center.z
+
+        formation_points.append(Point(gx, gy, gz))
+        N = N - 1
+        i = 1
+
+        while(N > 1):
+
+            formation_points.append(Point(gx + i.uav_distance, gy, gz))
+            formation_points.append(Point(gx - i.uav_distance, gy, gz))
+            i = i+1
+            N = N-2 
+
+        if N == 1:
+
+            formation_points.append(Point(gx + i.uav_distance, gy, gz))
+
+        rotate(formation_points, center, yaw)
+        return formation_points
+
+    def eskenar_dortgen(self, center, yaw, N, uav_distance):
+        formation_points = []
+
+        edge_length = ((N+3)//4) * uav_distance
+        gx = center.x
+        gy = center.y
+        gz = center.z
+        sin60 = (np.sin((np.pi)/3))
+
+        vertex_1 = Point(gx + (edge_length/2), gy, gz)
+        vertex_2 = Point(gx, gy + (edge_length/sin60), gz)
+        vertex_3 = Point(gx - (edge_length/2), gy, gz)
+        vertex_4 = Point(gx, gy - (edge_length/sin60), gz)
+
+        edge_points = []
+
+        for i in range((N-1)//4):
+
+            a = (N + 3)//4
+            
+            edge_points.append(Point(gx + (i+1) * ((edge_length/2)/a), gy + (edge_length/sin60) - (i+1) * ((edge_length/sin60)/a), gz))
+            edge_points.append(Point(gx - (edge_length/2) + (i+1) * ((edge_length/2)/a), gy + (i+1) * ((edge_length/sin60)/a), gz))
+            edge_points.append(Point(gx - (i+1) * ((edge_length/2)/a), gy - (edge_length/sin60) + (i+1) * ((edge_length/sin60)/a), gz))
+            edge_points.append(Point(gx + (edge_length/2) - (i+1) * ((edge_length/2)/a), gy - (i+1) * ((edge_length/sin60)/a), gz))
+        
+
+        if N == 1:
+            formation_points.append(vertex_1)
+
+        elif N == 2:
+            formation_points.append(vertex_1)
+            formation_points.append(vertex_2)
+
+        elif N == 3:
+            formation_points.append(vertex_1)
+            formation_points.append(vertex_2)    
+            formation_points.append(vertex_3)
+            
+        else:
+            formation_points.append(vertex_1)
+            formation_points.append(vertex_2)
+            formation_points.append(vertex_3)
+            formation_points.append(vertex_4)
+
+            for i in range(N-4):
+
+                formation_points.append(edge_points[i])    
+
+        rotate(formation_points, center, yaw)
+
+        return formation_points    
 
     def ucgen(self, center, yaw, N, uav_distance):
         formation_points = []
@@ -215,11 +293,6 @@ class Formation:
 
         else:
 
-            #koseler
-            formation_points.append(x_vertex)
-            formation_points.append(y_vertex)
-            formation_points.append(z_vertex)
-            
             #kenarlar uzerindeki noktalar
             for i in range(N-3):
 
