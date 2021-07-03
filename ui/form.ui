@@ -1169,7 +1169,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="selectSwarm">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1189,11 +1189,11 @@
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="executeButton">
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>550</y>
+        <y>540</y>
         <width>80</width>
         <height>21</height>
        </rect>
@@ -1205,33 +1205,262 @@
        <string notr="true">backgroundColorButton-&gt;setStyleSheet(&quot;background-color: rgb(255, 0, 0)&quot;)</string>
       </property>
       <property name="text">
-       <string>CANCEL</string>
+       <string>Execute</string>
       </property>
      </widget>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QListWidget" name="taskList">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>200</y>
-        <width>256</width>
-        <height>192</height>
+        <x>10</x>
+        <y>300</y>
+        <width>231</width>
+        <height>161</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="taskLabel1">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Duration</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="selectTask">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>131</width>
+        <height>22</height>
        </rect>
       </property>
       <item>
        <property name="text">
-        <string>dasfas</string>
+        <string>Swarm Navigation</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>takla atilacak</string>
+        <string>Takeoff</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>suru 1 buldugu ilik duvra carpacak</string>
+        <string>Landing</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>Change Formation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hover</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Add Drone</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Swarm Seperation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Swarm Combination</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Swarm Rotation</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QTextEdit" name="taskParameter1">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>70</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="taskLabel2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Coordinate x</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="taskParameter2">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>100</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="taskLabel3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Coordinate y</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="taskParameter3">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>130</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="taskLabel4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Coordinate z</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="taskParameter4">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>160</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="taskCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>190</y>
+        <width>70</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Relative</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="addToQueue">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>210</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add to queue</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="taskListRemove">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>470</y>
+        <width>51</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="taskListUp">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>470</y>
+        <width>31</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Up</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="taskListDown">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>470</y>
+        <width>41</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Down</string>
+      </property>
      </widget>
     </widget>
    </item>
